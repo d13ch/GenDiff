@@ -9,7 +9,7 @@ const __dirname = dirname(__filename);
 
 const filePath1 = join(__dirname, '..', '__fixtures__', 'file1.json');
 const filePath2 = join(__dirname, '..', '__fixtures__', 'file2.json');
-const expectedOutput = '/home/d_ch/frontend-project-46/__fixtures__/expectedResult.yml';
+const expectedOutput = join(__dirname, '..', '__fixtures__', 'expectedResult.yml');
 
 test('Stylish generation', () => {
   expect(generateDiff(filePath1, filePath2)).toEqual(readFileSync(expectedOutput, 'utf-8'));
