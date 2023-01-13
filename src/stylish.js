@@ -21,13 +21,13 @@ const generateDiff = (filePath1, filePath2) => {
   const keys = getKeys(fileData1, fileData2);
   const diff = keys.map((key) => {
     if (_.has(fileData1, key) && !_.has(fileData2, key)) {
-      return `  - ${key}: ${fileData1[key]}`
+      return `  - ${key}: ${fileData1[key]}`;
     }
     if (!_.has(fileData1, key) && _.has(fileData2, key)) {
-      return `  + ${key}: ${fileData2[key]}`
+      return `  + ${key}: ${fileData2[key]}`;
     } return fileData1[key] === fileData2[key]
-    ? `    ${key}: ${fileData1[key]}`
-    : `  - ${key}: ${fileData1[key]}\n  + ${key}: ${fileData2[key]}`
+      ? `    ${key}: ${fileData1[key]}`
+      : `  - ${key}: ${fileData1[key]}\n  + ${key}: ${fileData2[key]}`;
   });
   return `{\n${diff.join('\n')}\n}`;
 };
