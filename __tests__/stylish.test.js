@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'url';
-import { dirname, join } from 'path'
+import { dirname, join } from 'path';
 import { test, expect } from '@jest/globals';
 import { readFileSync } from 'fs';
 import generateDiff, { getFileData, getKeys } from '../src/stylish.js';
