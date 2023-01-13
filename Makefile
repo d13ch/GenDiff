@@ -5,4 +5,6 @@ publish:
 gendiff:
 	node bin/gendiff.js
 stylish:
-	node bin/gendiff-stylish.js
+	node src/stylish.js
+lint:
+	npx eslint .
