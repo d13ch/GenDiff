@@ -1,9 +1,14 @@
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path'
 import { test, expect } from '@jest/globals';
 import { readFileSync } from 'fs';
 import generateDiff, { getFileData, getKeys } from '../src/stylish.js';
 
-const filePath1 = '/home/d_ch/frontend-project-46/__fixtures__/file1.json';
-const filePath2 = '/home/d_ch/frontend-project-46/__fixtures__/file2.json';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const filePath1 = join(__dirname, '..', '__fixtures__', 'file1.json');
+const filePath2 = join(__dirname, '..', '__fixtures__', 'file2.json');
 const expectedOutput = '/home/d_ch/frontend-project-46/__fixtures__/expectedResult.yml';
 
 test('Stylish generation', () => {
