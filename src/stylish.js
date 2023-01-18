@@ -1,13 +1,6 @@
-import * as path from 'path';
-import { readFileSync } from 'fs';
 import _ from 'lodash';
+import parse from './parser.js';
 
-const getFileData = (filePath) => {
-  const currentPath = process.cwd();
-  const absPath = path.resolve(currentPath, filePath);
-  const fileData = readFileSync(absPath);
-  return JSON.parse(fileData);
-};
 const getKeys = (file1, file2) => {
   const keys1 = Object.keys(file1);
   const keys2 = Object.keys(file2);
@@ -16,8 +9,8 @@ const getKeys = (file1, file2) => {
 };
 
 const generateDiff = (filePath1, filePath2) => {
-  const fileData1 = getFileData(filePath1);
-  const fileData2 = getFileData(filePath2);
+  const fileData1 = parse(filePath1);
+  const fileData2 = parse(filePath2);
   const keys = getKeys(fileData1, fileData2);
   const diff = keys.map((key) => {
     if (_.has(fileData1, key) && !_.has(fileData2, key)) {
@@ -33,4 +26,4 @@ const generateDiff = (filePath1, filePath2) => {
 };
 
 export default generateDiff;
-export { getFileData, getKeys };
+export { getKeys };
