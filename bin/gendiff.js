@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import makeDiff from '../src/index.js';
-// import chooseFormat from '../src/formatting.js';
+import makeDiff from '../src/formatters/formatter.js';
 
 const program = new Command();
 
