@@ -29,7 +29,6 @@ const generateStylishDiff = (filePath1, filePath2) => {
     const ident = (level) => ' '.repeat(level * 4 - 2);
     const result = tree.map((node) => {
       const strValue = (value = node.value) => stringify(value, depth + 1);
-      // console.log(stringify(node.value, depth));
       switch (node.tag) {
         case 'deleted':
           return `${ident(depth)}- ${node.key}: ${strValue()}`;
