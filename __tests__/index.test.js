@@ -2,7 +2,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { expect, test } from '@jest/globals';
 import generateDiff, { getKeys } from '../src/index.js';
-import expectedResult from '../__fixtures__/expectedResult.js';
+import expectedResult from '../__fixtures__/treeResult.js';
 import parse from '../src/parser.js';
 
 const __filename = fileURLToPath(import.meta.url);
