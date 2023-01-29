@@ -32,7 +32,7 @@ const generateStylishDiff = (filePath1, filePath2) => {
         case 'added':
           return `${currentIdent}+ ${node.key}: ${strValue()}`;
         case 'changed':
-          return `${currentIdent}- ${node.key}: ${strValue(node.value.value1)}\n${currentIdent}+ ${node.key}: ${strValue(node.value.value2)}`;
+          return `${currentIdent}- ${node.key}: ${strValue(node.value.oldValue)}\n${currentIdent}+ ${node.key}: ${strValue(node.value.newValue)}`;
         case 'nested':
           return `${currentIdent}  ${node.key}: ${iter(node.value, depth + 1)}`;
         default:

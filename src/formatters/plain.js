@@ -35,13 +35,13 @@ const generatePlainDiff = (filePath1, filePath2) => {
         case 'deleted':
           return `Property '${currentPropertyPath}' was removed`;
         case 'changed':
-          return `Property '${currentPropertyPath}' was updated. From ${getValue(node.value.value1)} to ${getValue(node.value.value2)}`;
+          return `Property '${currentPropertyPath}' was updated. From ${getValue(node.value.oldValue)} to ${getValue(node.value.newValue)}`;
         case 'nested':
           return iter(node.value, currentPropertyPath);
         case 'unchanged':
           return [];
         default:
-          return 'Damn!';
+          throw new Error('Damn!');
       }
     });
     return result.join('\n');

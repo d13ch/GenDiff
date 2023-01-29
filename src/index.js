@@ -23,7 +23,7 @@ const generateDiffTree = (fileData1, fileData2) => {
     }
     return fileData1[key] === fileData2[key]
       ? { key: `${key}`, value: fileData1[key], tag: 'unchanged' }
-      : { key: `${key}`, value: { value1: fileData1[key], value2: fileData2[key] }, tag: 'changed' };
+      : { key: `${key}`, value: { oldValue: fileData1[key], newValue: fileData2[key] }, tag: 'changed' };
   });
   return diff;
 };
