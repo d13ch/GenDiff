@@ -18,6 +18,6 @@ beforeAll(() => {
   result = getFixturePath('plainResult.txt');
 });
 
-test('Plain generation of difference', () => {
+test('Plain generation', () => {
   expect(generatePlainDiff(filePath1, filePath2)).toEqual(readFileSync(result, 'utf-8'));
 });

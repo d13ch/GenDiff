@@ -25,18 +25,18 @@ const generateStylishDiff = (filePath1, filePath2) => {
   const iter = (tree, depth) => {
     const currentIdent = ident(depth, 4, 2);
     const result = tree.map((node) => {
-      const strValue = (value = node.value) => stringify(value, depth + 1);
+      const stringifyValue = (value = node.value) => stringify(value, depth + 1);
       switch (node.tag) {
         case 'deleted':
-          return `${currentIdent}- ${node.key}: ${strValue()}`;
+          return `${currentIdent}- ${node.key}: ${stringifyValue()}`;
         case 'added':
-          return `${currentIdent}+ ${node.key}: ${strValue()}`;
+          return `${currentIdent}+ ${node.key}: ${stringifyValue()}`;
         case 'changed':
-          return `${currentIdent}- ${node.key}: ${strValue(node.value.oldValue)}\n${currentIdent}+ ${node.key}: ${strValue(node.value.newValue)}`;
+          return `${currentIdent}- ${node.key}: ${stringifyValue(node.value.oldValue)}\n${currentIdent}+ ${node.key}: ${stringifyValue(node.value.newValue)}`;
         case 'nested':
           return `${currentIdent}  ${node.key}: ${iter(node.value, depth + 1)}`;
         default:
-          return `${currentIdent}  ${node.key}: ${strValue()}`;
+          return `${currentIdent}  ${node.key}: ${stringifyValue()}`;
       }
     });
 

@@ -20,8 +20,6 @@ test('Check difference generation logic', () => {
 });
 
 test('Get keys', () => {
-  const jsonData1 = parse(jsonPath1);
-  const jsonData2 = parse(ymlPath);
   const expectedKeys = ['follow', 'host', 'proxy', 'timeout', 'verbose'];
-  expect(getKeys(jsonData1, jsonData2)).toEqual(expectedKeys);
+  expect(getKeys(jsonFile1, ymlFile2)).toEqual(expectedKeys);
 });

@@ -17,7 +17,7 @@ const nestedPath1 = getFixturePath('nestedFile1.json');
 const nestedPath2 = getFixturePath('nestedFile2.json');
 const nestedResult = getFixturePath('stylishNestedResult.yml');
 
-test('Stylish generation of difference', () => {
+test('Stylish generation', () => {
   expect(generateDiff(jsonPath1, jsonPath2)).toEqual(readFileSync(stylishResult, 'utf-8'));
   expect(generateDiff(yamlPath, ymlPath)).toEqual(readFileSync(stylishResult, 'utf-8'));
   expect(generateDiff(jsonPath1, ymlPath)).toEqual(readFileSync(stylishResult, 'utf-8'));
