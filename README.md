@@ -7,7 +7,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/a0124f6f6f80788d9737/test_coverage)](https://codeclimate.com/github/d13ch/frontend-project-46/test_coverage)
 
 ## How it works
-The program defines a difference between structures of two files. Accepted extentions for input are **yaml** and **json**. An output types are *plain*, *JSON* and *stylish* as default format.
+The program defines a difference between structures of two files. Accepted extentions for input are **yaml** and **json**. Output formats are *plain*, *JSON* and *stylish* as default.
 For help type **gendiff -h**.
 ### Plain
 [![asciicast](https://asciinema.org/a/DJiXvO6gJ60ebpfhgVolHTd1a.svg)](https://asciinema.org/a/DJiXvO6gJ60ebpfhgVolHTd1a)
