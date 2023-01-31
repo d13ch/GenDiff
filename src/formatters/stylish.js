@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import generateDiffTree from '../index.js';
-import parse from '../parser.js';
 
 const ident = (level = 1, spacesCount = 1, correction = 0) => ' '.repeat(level * spacesCount - correction);
 
@@ -18,9 +17,7 @@ const stringify = (data, initialDepth) => {
 };
 
 const generateStylishDiff = (filePath1, filePath2) => {
-  const fileData1 = parse(filePath1);
-  const fileData2 = parse(filePath2);
-  const diffTree = generateDiffTree(fileData1, fileData2);
+  const diffTree = generateDiffTree(filePath1, filePath2);
 
   const iter = (tree, depth) => {
     const currentIdent = ident(depth, 4, 2);
@@ -33,16 +30,16 @@ const generateStylishDiff = (filePath1, filePath2) => {
           return `${currentIdent}+ ${node.key}: ${stringifyValue()}`;
         case 'changed':
           return `${currentIdent}- ${node.key}: ${stringifyValue(node.value.oldValue)}\n${currentIdent}+ ${node.key}: ${stringifyValue(node.value.newValue)}`;
+        case 'unchanged':
+          return `${currentIdent}  ${node.key}: ${stringifyValue()}`;
         case 'nested':
           return `${currentIdent}  ${node.key}: ${iter(node.value, depth + 1)}`;
         default:
-          return `${currentIdent}  ${node.key}: ${stringifyValue()}`;
+          throw new Error('Damn!');
       }
     });
-
     return `{\n${result.join('\n')}\n${ident(depth, 4, 4)}}`;
   };
-
   return iter(diffTree, 1);
 };
 

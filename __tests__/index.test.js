@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { expect, test } from '@jest/globals';
+import { beforeAll, expect, test } from '@jest/globals';
 import generateDiff, { getKeys } from '../src/index.js';
 import expectedResult from '../__fixtures__/treeResult.js';
 import parse from '../src/parser.js';
@@ -9,14 +9,20 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const getFixturePath = (filename) => join(__dirname, '..', '__fixtures__', filename);
 
-const jsonPath1 = getFixturePath('file1.json');
-const ymlPath = getFixturePath('file2.yml');
+let jsonPath1;
+let ymlPath;
+let jsonFile1;
+let ymlFile2;
 
-const jsonFile1 = parse(jsonPath1);
-const ymlFile2 = parse(ymlPath);
+beforeAll(() => {
+  jsonPath1 = getFixturePath('file1.json');
+  ymlPath = getFixturePath('file2.yml');
+  jsonFile1 = parse(jsonPath1);
+  ymlFile2 = parse(ymlPath);
+});
 
 test('Check difference generation logic', () => {
-  expect(generateDiff(jsonFile1, ymlFile2)).toEqual(expectedResult);
+  expect(generateDiff(jsonPath1, ymlPath)).toEqual(expectedResult);
 });
 
 test('Get keys', () => {

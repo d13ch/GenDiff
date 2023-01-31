@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import generateDiffTree from '../index.js';
-import parse from '../parser.js';
 
 const getPropertyPath = (begin, end = undefined) => {
   if (begin === null) {
@@ -20,9 +19,7 @@ const getValue = (value) => {
 };
 
 const generatePlainDiff = (filePath1, filePath2) => {
-  const fileData1 = parse(filePath1);
-  const fileData2 = parse(filePath2);
-  const diffTree = generateDiffTree(fileData1, fileData2);
+  const diffTree = generateDiffTree(filePath1, filePath2);
 
   let currentPropertyPath;
 
@@ -36,10 +33,10 @@ const generatePlainDiff = (filePath1, filePath2) => {
           return `Property '${currentPropertyPath}' was removed`;
         case 'changed':
           return `Property '${currentPropertyPath}' was updated. From ${getValue(node.value.oldValue)} to ${getValue(node.value.newValue)}`;
-        case 'nested':
-          return iter(node.value, currentPropertyPath);
         case 'unchanged':
           return [];
+        case 'nested':
+          return iter(node.value, currentPropertyPath);
         default:
           throw new Error('Damn!');
       }
