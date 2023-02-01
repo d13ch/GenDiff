@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import generateDiffTree from '../index.js';
 
 const getPropertyPath = (begin, end = undefined) => {
   if (begin === null) {
@@ -18,9 +17,7 @@ const getValue = (value) => {
   } return value;
 };
 
-const generatePlainDiff = (filePath1, filePath2) => {
-  const diffTree = generateDiffTree(filePath1, filePath2);
-
+const generatePlainDiff = (diffTree) => {
   let currentPropertyPath;
 
   const iter = (data, propertyPath) => {

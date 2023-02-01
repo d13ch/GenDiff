@@ -1,31 +1,39 @@
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { beforeAll, expect, test } from '@jest/globals';
-import generateDiff, { getKeys } from '../src/index.js';
-import expectedResult from '../__fixtures__/treeResult.js';
-import parse from '../src/parser.js';
+import { readFileSync } from 'fs';
+import generateDiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const getFixturePath = (filename) => join(__dirname, '..', '__fixtures__', filename);
 
 let jsonPath1;
-let ymlPath;
-let jsonFile1;
-let ymlFile2;
+let jsonPath2;
+let yamlPath1;
+let ymlPath2;
+let stylishResult;
+let plainResult;
+let jsonResult;
 
 beforeAll(() => {
-  jsonPath1 = getFixturePath('file1.json');
-  ymlPath = getFixturePath('file2.yml');
-  jsonFile1 = parse(jsonPath1);
-  ymlFile2 = parse(ymlPath);
+  jsonPath1 = getFixturePath('nestedFile1.json');
+  jsonPath2 = getFixturePath('nestedFile2.json');
+  yamlPath1 = getFixturePath('nestedFile1.yaml');
+  ymlPath2 = getFixturePath('nestedFile2.yml');
+  stylishResult = getFixturePath('results/stylishResult.yml');
+  plainResult = getFixturePath('results/plainResult.txt');
+  jsonResult = getFixturePath('results/result.json');
 });
 
-test('Check difference generation logic', () => {
-  expect(generateDiff(jsonPath1, ymlPath)).toEqual(expectedResult);
+test('Stylish', () => {
+  expect(generateDiff(jsonPath1, jsonPath2, 'stylish')).toEqual(readFileSync(stylishResult, 'utf-8'));
 });
 
-test('Get keys', () => {
-  const expectedKeys = ['follow', 'host', 'proxy', 'timeout', 'verbose'];
-  expect(getKeys(jsonFile1, ymlFile2)).toEqual(expectedKeys);
+test('Plain', () => {
+  expect(generateDiff(yamlPath1, jsonPath2, 'plain')).toEqual(readFileSync(plainResult, 'utf-8'));
+});
+
+test('JSON', () => {
+  expect(generateDiff(yamlPath1, ymlPath2, 'json')).toEqual(readFileSync(jsonResult, 'utf-8'));
 });

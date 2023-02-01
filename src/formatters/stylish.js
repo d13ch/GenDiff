@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import generateDiffTree from '../index.js';
 
 const ident = (level = 1, spacesCount = 1, correction = 0) => ' '.repeat(level * spacesCount - correction);
 
@@ -16,9 +15,7 @@ const stringify = (data, initialDepth) => {
   return iter(data, initialDepth);
 };
 
-const generateStylishDiff = (filePath1, filePath2) => {
-  const diffTree = generateDiffTree(filePath1, filePath2);
-
+const generateStylishDiff = (diffTree) => {
   const iter = (tree, depth) => {
     const currentIdent = ident(depth, 4, 2);
     const result = tree.map((node) => {

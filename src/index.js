@@ -1,38 +1,28 @@
-import _ from 'lodash';
+import * as path from 'path';
+import { readFileSync } from 'fs';
 import parse from './parser.js';
+import generateDiffTree from './tree.js';
+import makeFormattedDiff from './formatters/index.js';
 
-const getKeys = (file1, file2) => {
-  const keys1 = Object.keys(file1);
-  const keys2 = Object.keys(file2);
-  const keys = _.union(keys1, keys2);
-  return _.sortBy(keys);
+const getFileData = (filePath) => {
+  const currentPath = process.cwd();
+  const absPath = path.resolve(currentPath, filePath);
+  const fileData = readFileSync(absPath, 'utf-8');
+
+  return fileData;
 };
 
-const isObject = (data) => typeof data === 'object' && data !== null;
+const genDiff = (filePath1, filePath2, format) => {
+  const fileData1 = getFileData(filePath1);
+  const fileData2 = getFileData(filePath2);
+  const fileExtention1 = path.extname(filePath1);
+  const fileExtention2 = path.extname(filePath2);
+  const obj1 = parse(fileData1, fileExtention1);
+  const obj2 = parse(fileData2, fileExtention2);
+  const diffTree = generateDiffTree(obj1, obj2);
 
-const generateDiffTree = (filePath1, filePath2) => {
-  const fileData1 = parse(filePath1);
-  const fileData2 = parse(filePath2);
-
-  const iter = (data1, data2) => {
-    const keys = getKeys(data1, data2);
-    const diff = keys.map((key) => {
-      if (!_.has(data2, key)) {
-        return { key: `${key}`, value: data1[key], tag: 'deleted' };
-      }
-      if (!_.has(data1, key)) {
-        return { key: `${key}`, value: data2[key], tag: 'added' };
-      }
-      if (isObject(data1[key]) && isObject(data2[key])) {
-        return { key: `${key}`, value: iter(data1[key], data2[key]), tag: 'nested' };
-      }
-      return data1[key] === data2[key]
-        ? { key: `${key}`, value: data1[key], tag: 'unchanged' }
-        : { key: `${key}`, value: { oldValue: data1[key], newValue: data2[key] }, tag: 'changed' };
-    });
-    return diff;
-  };
-  return iter(fileData1, fileData2);
+  return makeFormattedDiff(diffTree, format);
 };
-export default generateDiffTree;
-export { getKeys };
+
+export default genDiff;
+export { getFileData };
