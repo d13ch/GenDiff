@@ -18,11 +18,9 @@ const getValue = (value) => {
 };
 
 const generatePlainDiff = (diffTree) => {
-  let currentPropertyPath;
-
   const iter = (data, propertyPath) => {
     const result = data.flatMap((node) => {
-      currentPropertyPath = getPropertyPath(propertyPath, node.key);
+      const currentPropertyPath = getPropertyPath(propertyPath, node.key);
       switch (node.tag) {
         case 'added':
           return `Property '${currentPropertyPath}' was added with value: ${getValue(node.value)}`;
