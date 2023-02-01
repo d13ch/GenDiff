@@ -12,7 +12,7 @@ const getFileData = (filePath) => {
   return fileData;
 };
 
-const genDiff = (filePath1, filePath2, format) => {
+const genDiff = (filePath1, filePath2, format = 'stylish') => {
   const fileData1 = getFileData(filePath1);
   const fileData2 = getFileData(filePath2);
   const fileExtention1 = path.extname(filePath1);
