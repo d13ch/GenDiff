@@ -14,21 +14,20 @@ const generateDiffTree = (fileData1, fileData2) => {
     const keys = getKeys(data1, data2);
     const diff = keys.map((key) => {
       if (!_.has(data2, key)) {
-        return { key: `${key}`, value: data1[key], tag: 'deleted' };
+        return { key, value: data1[key], tag: 'deleted' };
       }
       if (!_.has(data1, key)) {
-        return { key: `${key}`, value: data2[key], tag: 'added' };
+        return { key, value: data2[key], tag: 'added' };
       }
       if (isObject(data1[key]) && isObject(data2[key])) {
-        return { key: `${key}`, value: iter(data1[key], data2[key]), tag: 'nested' };
+        return { key, value: iter(data1[key], data2[key]), tag: 'nested' };
       }
       return data1[key] === data2[key]
-        ? { key: `${key}`, value: data1[key], tag: 'unchanged' }
-        : { key: `${key}`, value: { oldValue: data1[key], newValue: data2[key] }, tag: 'changed' };
+        ? { key, value: data1[key], tag: 'unchanged' }
+        : { key, value: { oldValue: data1[key], newValue: data2[key] }, tag: 'changed' };
     });
     return diff;
   };
   return iter(fileData1, fileData2);
 };
 export default generateDiffTree;
-export { getKeys };
