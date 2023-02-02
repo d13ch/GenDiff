@@ -8,9 +8,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const getFixturePath = (filename) => join(__dirname, '..', '__fixtures__', filename);
 
-test('Stylish', () => {
+test.each([
+  ['nestedFile1.json', 'nestedFile2.json'],
+  ['nestedFile1.yaml', 'nestedFile2.json'],
+  ['nestedFile1.yaml', 'nestedFile2.yml'],
+])('Stylish, default case and parsing of different formats', (file1, file2) => {
   const stylishResult = readFileSync(getFixturePath('results/stylishResult.yml'), 'utf-8');
-  expect(generateDiff(getFixturePath('nestedFile1.json'), getFixturePath('nestedFile2.json'), 'stylish')).toEqual(stylishResult);
+  expect(generateDiff(getFixturePath(file1), getFixturePath(file2), 'stylish')).toEqual(stylishResult);
+  expect(generateDiff(getFixturePath(file1), getFixturePath(file2))).toEqual(stylishResult);
 });
 
 test('Plain', () => {
